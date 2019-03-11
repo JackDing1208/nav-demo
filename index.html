@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>键盘导航</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
@@ -13,29 +14,69 @@
 
     </header>
     <main>
-        <div class="keyboard1">
-            <kbd></kbd>
-            <kbd></kbd>
-            <kbd></kbd>
-            <kbd></kbd>
-            <kbd></kbd>
-            <kbd></kbd>
-            <kbd></kbd>
-            <kbd></kbd>
-            <kbd></kbd>
-            <kbd></kbd>
-        </div>
+        <div id="keyboard"></div>
     </main>
     <footer>
 
     </footer>
     <script>
         var keys = {
-            0: [qwertyuiop],
-            1: [asdfghjkl],
-            2: [zxcvbnm],
-            length: 3
+            0: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
+            1: ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
+            2: ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
+            3: ['z', 'x', 'c', 'v', 'b', 'n', 'm'],
+            length: 4
         }
+
+        var hash = {
+            'a': 'acfun.tv',
+            'q': 'qq.com',
+            'w': 'weibo.com',
+            'z': 'zhihu.com'
+        }
+
+        //导入本地存储的地址
+        var hashlocal = JSON.parse(localStorage.getItem('nav') || 'null')
+        if (hashlocal) {
+            hash = hashlocal
+        }
+
+
+        //生成键盘
+        index1 = 0
+        while (index1 < keys['length']) {
+            div1 = document.createElement('div')
+            keyboard.appendChild(div1)
+            row = keys[index1]  //第几列键盘
+
+            index2 = 0
+            while (index2 < row['length']) {
+                //插入键盘
+                kbd1 = document.createElement('kbd')
+                div1.appendChild(kbd1)
+                kbd1.textContent = row[index2]    //第几列第几个字母
+                //插入编辑按钮
+                edit = document.createElement('button')
+                kbd1.appendChild(edit)
+                edit.textContent = '编辑'
+                edit.id = row[index2]
+                edit.onclick = function (click) {
+                    editkey = click.target.id
+                    hash[editkey] = prompt('输入网址')
+                    localStorage.setItem('nav', JSON.stringify(hash))
+                }
+                index2 = index2 + 1
+            }
+            index1 = index1 + 1
+        }
+
+        document.onkeypress = function (press) {
+            key = press.key
+            web = hash[key]
+            //location.href = 'http://' + web  当前窗口打开
+            window.open('http://' + web)   //新窗口打开
+        }
+
     </script>
 
 </body>

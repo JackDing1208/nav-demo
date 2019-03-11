@@ -1,0 +1,16 @@
+#keyboard kbd{
+    width: 50px;
+    height:50px;
+    font-size: 20px;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+    border:1px solid red;
+text-transform: capitalize;
+}
+
+#keyboard{
+    text-align: center;
+}
+
+
