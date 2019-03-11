@@ -29,8 +29,8 @@
         }
 
         var hash = {
-            'a': 'acfun.tv',
-            'q': 'qq.com',
+            'a': 'bilibili.com',
+            'q': 'github.com',
             'w': 'weibo.com',
             'z': 'zhihu.com'
         }
@@ -52,12 +52,15 @@
             index2 = 0
             while (index2 < row['length']) {
                 //插入键盘
-                kbd1 = document.createElement('kbd')
-                div1.appendChild(kbd1)
-                kbd1.textContent = row[index2]    //第几列第几个字母
+                kbd = document.createElement('kbd')
+                div1.appendChild(kbd)
+                kbd.className = 'key'
+                span = document.createElement('span')
+                kbd.appendChild(span)
+                span.textContent = row[index2]    //第几列第几个字母
                 //插入编辑按钮
                 edit = document.createElement('button')
-                kbd1.appendChild(edit)
+                kbd.appendChild(edit)
                 edit.textContent = '编辑'
                 edit.id = row[index2]
                 edit.onclick = function (click) {
