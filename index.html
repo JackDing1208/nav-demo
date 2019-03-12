@@ -55,19 +55,45 @@
                 kbd = document.createElement('kbd')
                 div1.appendChild(kbd)
                 kbd.className = 'key'
+
+                //插入键盘字母
                 span = document.createElement('span')
                 kbd.appendChild(span)
                 span.textContent = row[index2]    //第几列第几个字母
+
+                //插入网站logo
+                logo = document.createElement('img')
+                kbd.appendChild(logo)
+                logo.className = 'logo'
+
+                if (row[index2]) {
+                    logo.src = 'http://' + hash[row[index2]] + '/favicon.ico'
+                } else {
+                    logo.src = 'http://i.loli.net/2017/11/10/5a05afbc5e183.png'
+                }
+                logo.onerror = function (xxx) {
+                    xxx.target.src = 'http://i.loli.net/2017/11/10/5a05afbc5e183.png'
+                }
                 //插入编辑按钮
                 edit = document.createElement('button')
                 kbd.appendChild(edit)
                 edit.textContent = '编辑'
                 edit.id = row[index2]
                 edit.onclick = function (click) {
-                    editkey = click.target.id
-                    hash[editkey] = prompt('输入网址')
+                    editkey = click.target.id  //编辑的哪个字母
+                    x = prompt('输入网址')
+                    hash[editkey] = x
+
+                    //修改编辑按钮logo
+                    var edit2 = click.target
+                    var img2 = edit2.previousSibling
+                    img2.src = 'http://' + x + '/favicon.ico'
+                    img2.onerror = function (xxx) {
+                        xxx.target.src = 'http://i.loli.net/2017/11/10/5a05afbc5e183.png'
+                    }
                     localStorage.setItem('nav', JSON.stringify(hash))
                 }
+
                 index2 = index2 + 1
             }
             index1 = index1 + 1
