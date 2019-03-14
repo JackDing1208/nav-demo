@@ -4,7 +4,6 @@
   border-radius: 8px;
   padding: 0 12px;
   line-height: 69px;
-  position: relative;
   margin: 6px 6px;
   background-color: #000;
   color: #fff;
@@ -14,6 +13,8 @@
   display: inline-block;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
   vertical-align: middle;
+  border: 1px solid wheat;
+  position: relative;
 }
 
 
@@ -47,7 +48,10 @@ height: 100vh;
 body{
     background-image: url(./img/background.jpg);
     background-size: cover;
-    height: 100vh;    
+    height: 100vh;  
+    margin:0;
+    padding: 0;
+    display: block;  
 }
 
 .logo{
