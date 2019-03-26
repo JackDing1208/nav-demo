@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>键盘导航</title>
     <link rel="stylesheet" href="./style.css">
+    <script src="./jquery-3.3.1.min.js"></script>
 </head>
 
 <body>
@@ -45,24 +46,24 @@
         //生成键盘
         index1 = 0
         while (index1 < keys['length']) {
-            div1 = document.createElement('div')
+            let div1 = document.createElement('div')
             keyboard.appendChild(div1)
-            row = keys[index1]  //第几列键盘
+            let row = keys[index1]  //第几列键盘
 
-            index2 = 0
+            let index2 = 0
             while (index2 < row['length']) {
                 //插入键盘
-                kbd = document.createElement('kbd')
+                let kbd = document.createElement('kbd')
                 div1.appendChild(kbd)
                 kbd.className = 'key'
 
                 //插入键盘字母
-                span = document.createElement('span')
+                let span = document.createElement('span')
                 kbd.appendChild(span)
                 span.textContent = row[index2]    //第几列第几个字母
 
                 //插入网站logo
-                logo = document.createElement('img')
+                let logo = document.createElement('img')
                 kbd.appendChild(logo)
                 logo.className = 'logo'
 
@@ -75,18 +76,18 @@
                     xxx.target.src = 'http://i.loli.net/2017/11/10/5a05afbc5e183.png'
                 }
                 //插入编辑按钮
-                edit = document.createElement('button')
+                let edit = document.createElement('button')
                 kbd.appendChild(edit)
                 edit.textContent = '编辑'
                 edit.id = row[index2]
                 edit.onclick = function (click) {
-                    editkey = click.target.id  //编辑的哪个字母
+                    let editkey = click.target.id  //编辑的哪个字母
                     x = prompt('输入网址')
                     hash[editkey] = x
-
+                    click.stopPropagation()
                     //修改编辑按钮logo
-                    var edit2 = click.target
-                    var img2 = edit2.previousSibling
+                    let edit2 = click.target
+                    let img2 = edit2.previousSibling
                     img2.src = 'http://' + x + '/favicon.ico'
                     img2.onerror = function (xxx) {
                         xxx.target.src = 'http://i.loli.net/2017/11/10/5a05afbc5e183.png'
@@ -100,11 +101,22 @@
         }
 
         document.onkeypress = function (press) {
-            key = press.key
-            web = hash[key]
+            let key = press.key
+            let web = hash[key]
             //location.href = 'http://' + web  当前窗口打开
             window.open('http://' + web)   //新窗口打开
         }
+
+        let $key=$('.key')
+        $key.on('click',function (e) {
+            let x=$(e.currentTarget)
+            let y=$(x[0].firstChild)
+            let key=y[0].innerHTML
+            let web = hash[key]
+            window.open('http://' + web)   //新窗口打开
+        })
+
+
 
     </script>
 
