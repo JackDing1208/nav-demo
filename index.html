@@ -103,8 +103,11 @@
         document.onkeypress = function (press) {
             let key = press.key
             let web = hash[key]
-            //location.href = 'http://' + web  当前窗口打开
-            window.open('http://' + web)   //新窗口打开
+            if(web===undefined){
+                location.href ='https://jackding1991.github.io/nav-demo/#'
+            }else{
+                window.open('http://' + web)   //新窗口打开
+            }
         }
 
         let $key=$('.key')
@@ -113,7 +116,12 @@
             let y=$(x[0].firstChild)
             let key=y[0].innerHTML
             let web = hash[key]
-            window.open('http://' + web)   //新窗口打开
+            if(web===undefined){
+                location.href ='https://jackding1991.github.io/nav-demo/#'
+            }else{
+                window.open('http://' + web)   //新窗口打开
+            }
+
         })
 
 
