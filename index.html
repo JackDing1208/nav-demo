@@ -11,122 +11,116 @@
 </head>
 
 <body>
-    <header>
+<header>
 
-    </header>
-    <main>
-        <div id="keyboard"></div>
-    </main>
-    <footer>
+</header>
+<main>
+    <div id="keyboard"></div>
+</main>
+<footer>
 
-    </footer>
-    <script>
-        var keys = {
-            0: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
-            1: ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
-            2: ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
-            3: ['z', 'x', 'c', 'v', 'b', 'n', 'm'],
-            length: 4
-        }
+</footer>
+<script>
+    var keys = {
+        0: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
+        1: ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
+        2: ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
+        3: ['z', 'x', 'c', 'v', 'b', 'n', 'm'],
+        length: 4
+    }
 
-        var hash = {
-            'a': 'bilibili.com',
-            'q': 'github.com',
-            'w': 'weibo.com',
-            'z': 'zhihu.com'
-        }
+    var hash = {
+        'a': 'bilibili.com',
+        'q': 'github.com',
+        'w': 'weibo.com',
+        'z': 'zhihu.com'
+    }
 
-        //导入本地存储的地址
-        var hashlocal = JSON.parse(localStorage.getItem('nav') || 'null')
-        if (hashlocal) {
-            hash = hashlocal
-        }
+    //导入本地存储的地址
+    var hashlocal = JSON.parse(localStorage.getItem('nav') || 'null')
+    if (hashlocal) {
+        hash = hashlocal
+    }
 
 
-        //生成键盘
-        index1 = 0
-        while (index1 < keys['length']) {
-            let div1 = document.createElement('div')
-            keyboard.appendChild(div1)
-            let row = keys[index1]  //第几列键盘
+    //生成键盘
+    index1 = 0
+    while (index1 < keys['length']) {
+        let div1 = document.createElement('div')
+        keyboard.appendChild(div1)
+        let row = keys[index1]  //第几列键盘
 
-            let index2 = 0
-            while (index2 < row['length']) {
-                //插入键盘
-                let kbd = document.createElement('kbd')
-                div1.appendChild(kbd)
-                kbd.className = 'key'
+        let index2 = 0
+        while (index2 < row['length']) {
+            //插入键盘
+            let kbd = document.createElement('kbd')
+            div1.appendChild(kbd)
+            kbd.className = 'key'
 
-                //插入键盘字母
-                let span = document.createElement('span')
-                kbd.appendChild(span)
-                span.textContent = row[index2]    //第几列第几个字母
+            //插入键盘字母
+            let span = document.createElement('span')
+            kbd.appendChild(span)
+            span.textContent = row[index2]    //第几列第几个字母
 
-                //插入网站logo
-                let logo = document.createElement('img')
-                kbd.appendChild(logo)
-                logo.className = 'logo'
+            //插入网站logo
+            let logo = document.createElement('img')
+            kbd.appendChild(logo)
+            logo.className = 'logo'
 
-                if (row[index2]) {
-                    logo.src = 'http://' + hash[row[index2]] + '/favicon.ico'
-                } else {
-                    logo.src = 'http://i.loli.net/2017/11/10/5a05afbc5e183.png'
-                }
-                logo.onerror = function (xxx) {
+            if (row[index2]) {
+                logo.src = 'http://' + hash[row[index2]] + '/favicon.ico'
+            } else {
+                logo.src = 'http://i.loli.net/2017/11/10/5a05afbc5e183.png'
+            }
+            logo.onerror = function (xxx) {
+                xxx.target.src = 'http://i.loli.net/2017/11/10/5a05afbc5e183.png'
+            }
+            //插入编辑按钮
+            let edit = document.createElement('button')
+            kbd.appendChild(edit)
+            edit.textContent = '编辑'
+            edit.id = row[index2]
+            edit.onclick = function (click) {
+                let editkey = click.target.id  //编辑的哪个字母
+                x = prompt('输入网址')
+                hash[editkey] = x
+                click.stopPropagation()
+                //修改编辑按钮logo
+                let edit2 = click.target
+                let img2 = edit2.previousSibling
+                img2.src = 'http://' + x + '/favicon.ico'
+                img2.onerror = function (xxx) {
                     xxx.target.src = 'http://i.loli.net/2017/11/10/5a05afbc5e183.png'
                 }
-                //插入编辑按钮
-                let edit = document.createElement('button')
-                kbd.appendChild(edit)
-                edit.textContent = '编辑'
-                edit.id = row[index2]
-                edit.onclick = function (click) {
-                    let editkey = click.target.id  //编辑的哪个字母
-                    x = prompt('输入网址')
-                    hash[editkey] = x
-                    click.stopPropagation()
-                    //修改编辑按钮logo
-                    let edit2 = click.target
-                    let img2 = edit2.previousSibling
-                    img2.src = 'http://' + x + '/favicon.ico'
-                    img2.onerror = function (xxx) {
-                        xxx.target.src = 'http://i.loli.net/2017/11/10/5a05afbc5e183.png'
-                    }
-                    localStorage.setItem('nav', JSON.stringify(hash))
-                }
-
-                index2 = index2 + 1
+                localStorage.setItem('nav', JSON.stringify(hash))
             }
-            index1 = index1 + 1
+
+            index2 = index2 + 1
         }
+        index1 = index1 + 1
+    }
 
-        document.onkeypress = function (press) {
-            let key = press.key
-            let web = hash[key]
-            if(web===undefined){
-                location.href ='https://jackding1991.github.io/nav-demo/#'
-            }else{
-                window.open('http://' + web)   //新窗口打开
-            }
+    document.onkeypress = function (press) {
+        let key = press.key
+        let web = hash[key]
+        if (web !== undefined && web !== null) {
+            window.open('http://' + web)   //新窗口打开
         }
+    }
 
-        let $key=$('.key')
-        $key.on('click',function (e) {
-            let x=$(e.currentTarget)
-            let y=$(x[0].firstChild)
-            let key=y[0].innerHTML
-            let web = hash[key]
-            if(web===undefined){
-                location.href ='https://jackding1991.github.io/nav-demo/#'
-            }else{
-                window.open('http://' + web)   //新窗口打开
-            }
-
-        })
+    let $key = $('.key')
+    $key.on('click', function (e) {
+        let x = $(e.currentTarget)
+        let y = $(x[0].firstChild)
+        let key = y[0].innerHTML
+        let web = hash[key]
+        if (web !== undefined && web !== null) {
+            window.open('http://' + web)   //新窗口打开
+        }
+    })
 
 
-
-    </script>
+</script>
 
 </body>
 
